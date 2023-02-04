@@ -1,0 +1,133 @@
+.form-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.form-box {
+    max-width: 100rem;
+    width: 100%;
+    background-color: var(--white);
+    display: flex;
+    padding: 2rem;
+    border-radius: 1.2rem;
+}
+
+.step-track {
+    width: 27.4rem;
+    height: 56.8rem;
+    color: var(--white);
+    background-image: url("src/assets/images/bg-sidebar-desktop.svg");
+    border-radius: 1rem;
+    padding: 4rem 3rem;
+}
+
+.step-track ul {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.step-track li {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+}
+.step-track li > div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 50%;
+    border: 0.1rem solid var(--white);
+    font-weight: 700;
+}
+
+.step-track .selected-step {
+    background-color: var(--light-blue);
+    border: 0.1 solid var(--light-blue) !important;
+    color: var(--marine-blue);
+}
+
+.step-track li > div:nth-child(2) > p {
+    text-transform: uppercase;
+    color: var(--light-gray);
+    font-weight: 400;
+
+}
+
+.step-track li > div:nth-child(2) > p:nth-child(2) {
+    font-weight: 700;
+    letter-spacing: 0.2rem;
+    color: var(--white);
+}
+
+.form {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0 2rem;
+}
+
+.form-content-box {
+    max-width: 50rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.form-content-box h2 {
+    color: var(--marine-blue);
+    font-size: 3rem;
+}
+.form-content-box h2:first-letter,
+.form-content-box h3:first-letter{
+    text-transform: capitalize;
+}
+
+.form-content-box h3 {
+    color: var(--cool-gray);
+    font-weight: 400;
+    font-size: 1.8rem;
+}
+
+.form form {
+    flex-grow: 1;
+    margin-top: 1rem;
+}
+
+.form .buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.back-btn {
+    cursor: pointer;
+    background-color: transparent;
+    padding: 1.4rem 2.4rem;
+    border: none;
+    color: var(--cool-gray);
+    font-weight: 700;
+}
+.back-btn:hover {
+    text-decoration: underline;
+}
+
+.next-btn {
+    background-color: var(--marine-blue);
+    color: var(--white);
+    border-radius: 0.4rem;
+    padding: 1.4rem 2.4rem;
+    border: none;
+    cursor: pointer;
+}
+.next-btn:hover {
+    opacity: 0.6
+}
