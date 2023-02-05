@@ -47,7 +47,7 @@ export function MultiStepForm() {
         switch (selectedStep) {
             case 1: return <Step1 />
             case 2: return <Step2 selectedPlan={formValues.plan} yearly_payment={formValues.yearly_payment} setFormValues={setFormValues} />
-            case 3: return <Step3 />
+            case 3: return <Step3 addons={formValues.addons} setFormValues={setFormValues} />
             case 4: return <Step4 />
             default: return null;
         }
