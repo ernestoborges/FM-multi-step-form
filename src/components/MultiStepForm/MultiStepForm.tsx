@@ -48,7 +48,7 @@ export function MultiStepForm() {
             case 1: return <Step1 />
             case 2: return <Step2 selectedPlan={formValues.plan} yearly_payment={formValues.yearly_payment} setFormValues={setFormValues} />
             case 3: return <Step3 addons={formValues.addons} setFormValues={setFormValues} />
-            case 4: return <Step4 />
+            case 4: return <Step4 selectedPlan={formValues.plan} yearly_payment={formValues.yearly_payment} addons={formValues.addons} setFormValues={setFormValues}/>
             default: return null;
         }
     }

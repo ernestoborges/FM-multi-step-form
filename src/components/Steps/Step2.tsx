@@ -37,7 +37,6 @@ export function Step2({ selectedPlan, setFormValues, yearly_payment }: Props) {
             </ul>
             <div
                 className="switcher-container"
-            // onClick={() => setFormValues((prev: [key: string]) => ({ ...prev, yearly_payment: yearly_payment ? false : true }))}
             >
                 <p 
                     className={`${!yearly_payment ? "selected-payment" : ""}`}
