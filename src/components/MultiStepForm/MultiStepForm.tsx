@@ -1,17 +1,18 @@
 import "./styles.css";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, useFormikContext } from "formik";
 import { FormikHelpers } from "formik/dist/types";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Step1 } from "../Steps/Step1";
 import { Step2 } from "../Steps/Step2";
 import { Step3 } from "../Steps/Step3";
 import { Step4 } from "../Steps/Step4";
+import { SubmitPage } from "../Steps/SubmitPage";
 
-interface Values {
+export interface Values {
     name: string;
     email: string;
     phone: string;
-    plan: string;
+    plan: "Arcade" | "Advanced" | "Pro";
     yearly_payment: boolean;
     addons: {
         online_service: boolean;
@@ -30,7 +31,7 @@ export function MultiStepForm() {
     ]
 
     const [selectedStep, setSelectedStep] = useState(1);
-    const [formValues, setFormValues] = useState({
+    const [formValues, setFormValues] = useState<Values>({
         name: "",
         email: "",
         phone: "",
@@ -46,9 +47,10 @@ export function MultiStepForm() {
     function handleStepSelection(): React.ReactNode {
         switch (selectedStep) {
             case 1: return <Step1 />
-            case 2: return <Step2 selectedPlan={formValues.plan} yearly_payment={formValues.yearly_payment} setFormValues={setFormValues} />
-            case 3: return <Step3 addons={formValues.addons} setFormValues={setFormValues} />
-            case 4: return <Step4 selectedPlan={formValues.plan} yearly_payment={formValues.yearly_payment} addons={formValues.addons} setFormValues={setFormValues}/>
+            case 2: return <Step2 formValues={formValues} setFormValues={setFormValues} />
+            case 3: return <Step3 formValues={formValues} setFormValues={setFormValues} />
+            case 4: return <Step4 formValues={formValues} setFormValues={setFormValues} />
+            case 5: return <SubmitPage />
             default: return null;
         }
     }
@@ -78,7 +80,8 @@ export function MultiStepForm() {
                         <h2>{steps.find(item => item.n === selectedStep)?.subtitle}</h2>
                         <h3>{steps.find(item => item.n === selectedStep)?.text}</h3>
                         <Formik
-                            initialValues={ formValues }
+
+                            initialValues={formValues}
                             onSubmit={(
                                 values: Values,
                                 { setSubmitting }: FormikHelpers<Values>
@@ -89,19 +92,19 @@ export function MultiStepForm() {
                                 }, 500);
                             }}
                         >
-                            <Form>
+                            <Form id="formik">
                                 {handleStepSelection()}
                             </Form>
 
                         </Formik>
-                        <div className="buttons-container">
+                        <div className={`buttons-container ${selectedStep === 5 ? "hidden" : ""}`}>
                             <div>
                                 {
                                     selectedStep !== 1 && <button onClick={() => selectedStep > 1 ? setSelectedStep(selectedStep - 1) : ""} className="back-btn">Go Back</button>
                                 }
                             </div>
                             <div>
-                                <button className="next-btn" onClick={() => selectedStep < 4 ? setSelectedStep(selectedStep + 1) : ""}>Next Step</button>
+                                <button form="formik" type={selectedStep === 5 ? "submit" : "button"} className="next-btn" onClick={(e) => selectedStep < 5 ? setSelectedStep(selectedStep + 1) : ""}>Next Step</button>
                             </div>
                         </div>
                     </div>

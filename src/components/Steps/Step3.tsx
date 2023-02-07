@@ -1,38 +1,35 @@
 import { Field } from "formik";
+import {Values} from "../MultiStepForm/MultiStepForm"
 
 interface Props {
-    addons: {
-        online_service: boolean;
-        larger_storage: boolean;
-        cuztomizeble_profile: boolean;
-    };
+    formValues: Values;
     setFormValues: Function
 }
 
-export function Step3({ addons, setFormValues }: Props) {
+export function Step3({ formValues, setFormValues }: Props) {
 
-    const optionsMap = new Map<number, { keyName: string; name: string; desc: string; price: number; }>([
-        [1, { keyName: "online_service", name: "Online service", desc: "Acess to multiple games", price: 1 }],
-        [2, { keyName: "larger_storage", name: "Larger storage", desc: "Extra 1TB of cloud save", price: 2 }],
-        [3, { keyName: "cuztomizeble_profile", name: "Customizable Profile", desc: "Custom theme your profile", price: 2 }]
-    ])
+    const options = [
+        { keyName: "online_service", name: "Online service", desc: "Acess to multiple games", price: 1 },
+        { keyName: "larger_storage", name: "Larger storage", desc: "Extra 1TB of cloud save", price: 2 },
+        { keyName: "cuztomizeble_profile", name: "Customizable Profile", desc: "Custom theme your profile", price: 2 }
+    ]
 
     return (
         <div className="form-step-content-wrapper addons-step">
             <ul>
                 {
-                    Array.from(optionsMap.values()).map((option, index) => (
+                    options.map((option, index) => (
                         <li >
-                            <label className={`${addons[option.keyName as keyof typeof addons] ? "option-selected" : ""}`}>
+                            <label className={`${formValues.addons[option.keyName as keyof typeof formValues.addons] ? "option-selected" : ""}`}>
                                 <Field
                                     type="checkbox"
                                     name={`option${index + 1}`}
-                                    checked={addons[option.keyName as keyof typeof addons]} 
+                                    checked={formValues.addons[option.keyName as keyof typeof formValues.addons]} 
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormValues((prev: { [key: string]: any, addons: object }) => ({
                                         ...prev,
                                         addons: {
                                             ...prev.addons,
-                                            [option.keyName as keyof typeof addons]: e.target.checked
+                                            [option.keyName as keyof typeof formValues.addons]: e.target.checked
                                         }
                                     }))} />
                                 <div>

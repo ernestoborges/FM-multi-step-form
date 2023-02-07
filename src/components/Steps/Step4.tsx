@@ -1,18 +1,12 @@
 import { Field } from "formik";
-
+import { Values } from "../MultiStepForm/MultiStepForm";
 
 interface Props {
-    selectedPlan: string;
-    yearly_payment: boolean;
-    addons: {
-        online_service: boolean;
-        larger_storage: boolean;
-        cuztomizeble_profile: boolean;
-    };
+    formValues: Values;
     setFormValues: Function;
 }
 
-export function Step4({ selectedPlan, yearly_payment, addons, setFormValues }: Props) {
+export function Step4({ formValues, setFormValues }: Props) {
 
     const plans = [
         { name: "Arcade", month: 9, year: 90 },
@@ -20,24 +14,24 @@ export function Step4({ selectedPlan, yearly_payment, addons, setFormValues }: P
         { name: "Pro", month: 15, year: 150 }
     ]
 
-    const optionsMap = new Map<number, { keyName: string; name: string; desc: string; price: { year: number; month: number }; }>([
-        [1, { keyName: "online_service", name: "Online service", desc: "Acess to multiple games", price: { year: 10, month: 1 } }],
-        [2, { keyName: "larger_storage", name: "Larger storage", desc: "Extra 1TB of cloud save", price: { year: 20, month: 2 } }],
-        [3, { keyName: "cuztomizeble_profile", name: "Customizable Profile", desc: "Custom theme your profile", price: { year: 20, month: 2 } }]
-    ])
+    const options = [
+        { keyName: "online_service", name: "Online service", desc: "Acess to multiple games", price: { year: 10, month: 1 } },
+        { keyName: "larger_storage", name: "Larger storage", desc: "Extra 1TB of cloud save", price: { year: 20, month: 2 } },
+        { keyName: "cuztomizeble_profile", name: "Customizable Profile", desc: "Custom theme your profile", price: { year: 20, month: 2 } }
+    ]
 
     return (
         <div className="form-step-content-wrapper final-step">
             <div className="card">
                 <div className="plan-info">
                     <div>
-                        <p>{`${selectedPlan} (${yearly_payment ? "Yearly" : "Monthly"})`}</p>
+                        <p>{`${formValues.plan} (${formValues.yearly_payment ? "Yearly" : "Monthly"})`}</p>
                         <button type="button" onClick={() =>
                             setFormValues(
                                 (prev: { [key: string]: any, yearly_payment: boolean }) => (
                                     {
                                         ...prev,
-                                        yearly_payment: !yearly_payment
+                                        yearly_payment: !formValues.yearly_payment
                                     }
                                 )
                             )
@@ -46,9 +40,9 @@ export function Step4({ selectedPlan, yearly_payment, addons, setFormValues }: P
                     </div>
                     <output>
                         {`$
-                            ${yearly_payment
-                                ? plans.find(plan => plan.name === selectedPlan)?.year + "/yr"
-                                : plans.find(plan => plan.name === selectedPlan)?.month + "/mo"
+                            ${formValues.yearly_payment
+                                ? plans.find(plan => plan.name === formValues.plan)?.year + "/yr"
+                                : plans.find(plan => plan.name === formValues.plan)?.month + "/mo"
                             }
                         `}
                     </output>
@@ -56,10 +50,10 @@ export function Step4({ selectedPlan, yearly_payment, addons, setFormValues }: P
                 <hr />
                 <ul className="options-list">
                     {
-                        Array.from(optionsMap.values()).map((option) => (
-                            <li className={`${addons[option.keyName as keyof typeof addons] ? "" : "hidden"}`}>
+                        options.map((option) => (
+                            <li className={`${formValues.addons[option.keyName as keyof typeof formValues.addons] ? "" : "hidden"}`}>
                                 <p>{option.name}</p>
-                                <p>{`$${yearly_payment
+                                <p>{`$${formValues.yearly_payment
                                     ? option.price.year + "/yr"
                                     : option.price.month + "/mo"
                                     }`}</p>
@@ -69,26 +63,25 @@ export function Step4({ selectedPlan, yearly_payment, addons, setFormValues }: P
                 </ul>
             </div>
             <div className="total">
-                <p>{`Total (${yearly_payment ? "per year" : "per month"})`}</p>
+                <p>{`Total (${formValues.yearly_payment ? "per year" : "per month"})`}</p>
                 <p>
-                    {
-                        yearly_payment
-                            ?   plans.filter(plan => plan.name === selectedPlan )[0].year 
+                    {formValues.yearly_payment
+                            ?   `+$${plans.filter(plan => plan.name === formValues.plan )[0].year 
                                 + 
-                                Array.from(optionsMap.values()).reduce((a, b) => {
-                                    if(addons[b.keyName as keyof typeof addons]){
+                                options.reduce((a, b) => {
+                                    if(formValues.addons[b.keyName as keyof typeof formValues.addons]){
                                         return a + b.price.year
                                     }
                                     return a + 0
-                                }, 0)
-                            :   plans.filter(plan => plan.name === selectedPlan)[0].month
+                                }, 0)}/yr`
+                            :   `+$${plans.filter(plan => plan.name === formValues.plan)[0].month
                                 + 
-                                Array.from(optionsMap.values()).reduce((a, b) => {
-                                    if(addons[b.keyName as keyof typeof addons]){
+                                options.reduce((a, b) => {
+                                    if(formValues.addons[b.keyName as keyof typeof formValues.addons]){
                                         return a + b.price.month
                                     }
                                     return a + 0
-                                }, 0)
+                                }, 0)}/mo`
                     }
                 </p>
             </div>
