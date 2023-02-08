@@ -29,6 +29,10 @@ ul {
   list-style: none;
 }
 
+input {
+  outline: transparent;
+}
+
 .hidden {
   display: none !important;
 }

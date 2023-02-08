@@ -1,5 +1,5 @@
 import "./styles.css";
-import { Formik, Form} from "formik";
+import { Formik, Form } from "formik";
 import { FormikConfig, FormikValues } from "formik/dist/types";
 import React, { useContext } from "react";
 import { Step1 } from "../Steps/Step1";
@@ -21,6 +21,30 @@ export interface Values {
         larger_storage: boolean;
         cuztomizeble_profile: boolean;
     }
+}
+
+const validate = (values: FormikValues) => {
+    const errors: any = {};
+
+    // Name
+    if (!values.name) {
+        errors.name = 'This field is required';
+    }
+    // Email
+    if (!values.email) {
+        errors.email = 'This field is required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+        errors.email = 'Invalid email';
+    }
+
+    // Phone number
+    if (!values.phone) {
+        errors.phone = 'This field is required';
+    } else if (!/^\d{10,}$/i.test(values.phone)) {
+        errors.phone = 'Invalid phone number';
+    }
+
+    return errors;
 }
 
 export function MultiStepForm() {
@@ -57,6 +81,7 @@ export function MultiStepForm() {
                                     }
                                 }
                             }
+                            validate={validate}
                             onSubmit={() => { }}
                         >
                             <Step1 />

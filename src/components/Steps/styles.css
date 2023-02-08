@@ -1,3 +1,11 @@
+/* invalid input */
+
+.invalid-input {
+    border: 0.1rem solid var(--strawberry-red) !important;
+}
+
+
+/* step 1 */
 .personal-info {
     display: flex;
     flex-direction: column;
@@ -9,6 +17,19 @@
     flex-direction: column;
     gap: 1rem;
     color: var(--marine-blue);
+}
+
+.personal-info label div:first-child {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.personal-info label div:first-child span:nth-child(2) {
+    font-size: 1.4rem;
+    color: var(--strawberry-red);
+    font-weight: 700;
 }
 
 .personal-info input {
