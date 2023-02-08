@@ -1,62 +1,57 @@
 import "./styles.css"
+import { Field, useFormikContext } from "formik";
 import { Values } from "../MultiStepForm/MultiStepForm";
 
-interface Props {
-    formValues: Values;
-    setFormValues: Function;
-}
+export function Step2() {
 
-export function Step2({ formValues, setFormValues }: Props) {
-    
     const plans = [
         { name: "Arcade", month: 9, year: 90 },
         { name: "Advanced", month: 12, year: 120 },
         { name: "Pro", month: 15, year: 150 }
     ]
 
+    const { setFieldValue, values } = useFormikContext<Values>();
+
     return (
         <div className="form-step-content-wrapper plan-selection">
-            <ul className="plan-list">
+            <div className="plan-list" role="group">
                 {
                     plans.map((plan) => (
-                        <li
-                            className={`${formValues.plan == plan.name ? "selected-plan" : ""}`}
-                            onClick={() => setFormValues((prev: [key: string]) => ({ ...prev, plan: plan.name }))}
-                        >
-                            <div>
-                                <img src={`src/assets/images/icon-${plan.name}.svg`} />
-                            </div>
-                            <div>
-                                <p>{plan.name}</p>
-                                <p>{`$${formValues.yearly_payment ? plan.year : plan.month}/${formValues.yearly_payment ? "yr" : "mo"}`}</p>
-                                {formValues.yearly_payment && <p>2 months free</p>}
-                            </div>
-                        </li>
+                        <label className={`${values.plan === plan.name ? "selected-plan" : ""}`} >
+                                <Field type="radio" name="plan" value={plan.name} className="hidden"/>
+                                <div>
+                                    <img src={`src/assets/images/icon-${plan.name}.svg`} />
+                                </div>
+                                <div>
+                                    <p>{plan.name}</p>
+                                    <p>{`$${values.yearly_payment ? plan.year : plan.month}/${values.yearly_payment ? "yr" : "mo"}`}</p>
+                                    {values.yearly_payment && <p>2 months free</p>}
+                                </div>
+                        </label>
                     ))
                 }
-            </ul>
+            </div>
             <div
                 className="switcher-container"
             >
-                <p 
-                    className={`${!formValues.yearly_payment ? "selected-payment" : ""}`}
-                    onClick={() => setFormValues((prev: typeof setFormValues) => ({ ...prev, yearly_payment: false}))}
+                <p
+                    className={`${!values.yearly_payment ? "selected-payment" : ""}`}
+                    onClick={() => setFieldValue("yearly_payment", false )}
                 >Monthly</p>
                 <label className="switch">
-                    <input
+                    <Field
                         id="switch-input"
                         type="checkbox"
-                        checked={formValues.yearly_payment}
+                        name="yearly_payment"
+                        checked={values.yearly_payment}
                         readOnly
-                        onClick={() => setFormValues((prev: [key: string]) => ({ ...prev, yearly_payment: formValues.yearly_payment ? false : true }))}
                     />
                     <span className="slider round"></span>
                 </label>
-                <p 
-                    className={`${formValues.yearly_payment ? "selected-payment" : ""}`}
-                    onClick={() => setFormValues((prev: [key: string]) => ({ ...prev, yearly_payment: true}))}
+                <p
+                    className={`${values.yearly_payment ? "selected-payment" : ""}`}
+                    onClick={() => setFieldValue("yearly_payment", true )}
                 >Yearly</p>
-
             </div>
         </div>
     )

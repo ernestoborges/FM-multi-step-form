@@ -37,7 +37,7 @@
     align-items: flex-start;
     gap: 2rem;
 }
-.plan-list li {
+.plan-list label {
     width: 100%;
     border: 0.1rem solid var(--light-gray);
     border-radius: 0.6rem;
@@ -49,23 +49,23 @@
     gap: 4rem;
     cursor: pointer;
 }
-.plan-list li:hover {
+.plan-list label:hover {
     background-color: var(--magnolia);
 }
 
-.plan-list li > div:nth-child(2){
+.plan-list label > div:nth-child(2){
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
 }
-.plan-list li > div:nth-child(2) > p:first-child{
+.plan-list label > div:nth-child(2) > p:first-child{
     color: var(--marine-blue);
     font-weight: 700;
 }
-.plan-list li > div:nth-child(2) > p:nth-child(2){
+.plan-list label > div:nth-child(2) > p:nth-child(2){
     color: var(--cool-gray);
 }
-.plan-list li > div:nth-child(2) > p:nth-child(3){
+.plan-list label > div:nth-child(2) > p:nth-child(3){
     color: var(--marine-blue);s
 }
 

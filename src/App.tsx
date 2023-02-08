@@ -1,15 +1,18 @@
 import './App.css'
 import { MultiStepForm } from './components/MultiStepForm/MultiStepForm'
+import { StepProvider } from './context/StepProvider'
 
 
 function App() {
 
   return (
-    <div className="App">
-      <main>
-        <MultiStepForm />
-      </main>
-    </div>
+      <StepProvider>
+        <div className="App">
+          <main>
+            <MultiStepForm />
+          </main>
+        </div>
+      </StepProvider>
   )
 }
 

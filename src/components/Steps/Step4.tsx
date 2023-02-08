@@ -1,12 +1,7 @@
-import { Field } from "formik";
+import { useFormikContext } from "formik";
 import { Values } from "../MultiStepForm/MultiStepForm";
 
-interface Props {
-    formValues: Values;
-    setFormValues: Function;
-}
-
-export function Step4({ formValues, setFormValues }: Props) {
+export function Step4() {
 
     const plans = [
         { name: "Arcade", month: 9, year: 90 },
@@ -20,29 +15,22 @@ export function Step4({ formValues, setFormValues }: Props) {
         { keyName: "cuztomizeble_profile", name: "Customizable Profile", desc: "Custom theme your profile", price: { year: 20, month: 2 } }
     ]
 
+    const { setFieldValue, values } = useFormikContext<Values>();
+
     return (
         <div className="form-step-content-wrapper final-step">
             <div className="card">
                 <div className="plan-info">
                     <div>
-                        <p>{`${formValues.plan} (${formValues.yearly_payment ? "Yearly" : "Monthly"})`}</p>
-                        <button type="button" onClick={() =>
-                            setFormValues(
-                                (prev: { [key: string]: any, yearly_payment: boolean }) => (
-                                    {
-                                        ...prev,
-                                        yearly_payment: !formValues.yearly_payment
-                                    }
-                                )
-                            )
-                        }
+                        <p>{`${values.plan} (${values.yearly_payment ? "Yearly" : "Monthly"})`}</p>
+                        <button type="button" onClick={() => setFieldValue("yearly_payment", !values.yearly_payment)}
                         >Change</button>
                     </div>
                     <output>
                         {`$
-                            ${formValues.yearly_payment
-                                ? plans.find(plan => plan.name === formValues.plan)?.year + "/yr"
-                                : plans.find(plan => plan.name === formValues.plan)?.month + "/mo"
+                            ${values.yearly_payment
+                                ? plans.find(plan => plan.name === values.plan)?.year + "/yr"
+                                : plans.find(plan => plan.name === values.plan)?.month + "/mo"
                             }
                         `}
                     </output>
@@ -51,9 +39,9 @@ export function Step4({ formValues, setFormValues }: Props) {
                 <ul className="options-list">
                     {
                         options.map((option) => (
-                            <li className={`${formValues.addons[option.keyName as keyof typeof formValues.addons] ? "" : "hidden"}`}>
+                            <li className={`${values.addons[option.keyName as keyof typeof values.addons] ? "" : "hidden"}`}>
                                 <p>{option.name}</p>
-                                <p>{`$${formValues.yearly_payment
+                                <p>{`$${values.yearly_payment
                                     ? option.price.year + "/yr"
                                     : option.price.month + "/mo"
                                     }`}</p>
@@ -63,21 +51,21 @@ export function Step4({ formValues, setFormValues }: Props) {
                 </ul>
             </div>
             <div className="total">
-                <p>{`Total (${formValues.yearly_payment ? "per year" : "per month"})`}</p>
+                <p>{`Total (${values.yearly_payment ? "per year" : "per month"})`}</p>
                 <p>
-                    {formValues.yearly_payment
-                            ?   `+$${plans.filter(plan => plan.name === formValues.plan )[0].year 
+                    {values.yearly_payment
+                            ?   `+$${plans.filter(plan => plan.name === values.plan )[0].year 
                                 + 
                                 options.reduce((a, b) => {
-                                    if(formValues.addons[b.keyName as keyof typeof formValues.addons]){
+                                    if(values.addons[b.keyName as keyof typeof values.addons]){
                                         return a + b.price.year
                                     }
                                     return a + 0
                                 }, 0)}/yr`
-                            :   `+$${plans.filter(plan => plan.name === formValues.plan)[0].month
+                            :   `+$${plans.filter(plan => plan.name === values.plan)[0].month
                                 + 
                                 options.reduce((a, b) => {
-                                    if(formValues.addons[b.keyName as keyof typeof formValues.addons]){
+                                    if(values.addons[b.keyName as keyof typeof values.addons]){
                                         return a + b.price.month
                                     }
                                     return a + 0
