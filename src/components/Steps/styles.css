@@ -87,7 +87,7 @@
     color: var(--cool-gray);
 }
 .plan-list label > div:nth-child(2) > p:nth-child(3){
-    color: var(--marine-blue);s
+    color: var(--marine-blue);
 }
 
 .selected-plan {
