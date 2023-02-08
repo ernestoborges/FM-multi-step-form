@@ -83,7 +83,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
     return (
         <>
             <Formik {...props} onSubmit={(values: FormikValues) => {
-                if (currentStep < childrenArray.length) {
+                if (currentStep < childrenArray.length - 1) {
                     setCurrentStep(currentStep + 1);
                 } else {
                     setTimeout(() => {
