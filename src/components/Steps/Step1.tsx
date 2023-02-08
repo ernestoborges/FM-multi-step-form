@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, useFormikContext } from "formik";
-import { useEffect } from "react";
+import { PhoneMask } from "../Masks/PhoneMask";
 
 export function Step1() {
 
@@ -12,7 +12,7 @@ export function Step1() {
                     <span>Name</span>
                     <ErrorMessage name="name" component="span" />
                 </div>
-                <Field id="name" name="name" placeholder="e.g. Stephen King" className={touched.name && errors.name ? "invalid-input" : "" } />
+                <Field id="name" name="name" placeholder="e.g. Stephen King" className={touched.name && errors.name ? "invalid-input" : ""} />
             </label>
 
             <label htmlFor="email">
@@ -28,12 +28,7 @@ export function Step1() {
                     <span>Phone Number</span>
                     <ErrorMessage name="phone" component="span" />
                 </div>
-                <Field
-                    id="phone"
-                    name="phone"
-                    placeholder="e.g. +1 234 567 890"
-                    className={touched.phone && errors.phone ? "invalid-input" : ""}
-                />
+                <PhoneMask id="phone" name="phone" placeholder="e.g. (00) 0000-0000" />
             </label>
         </div>
     )
