@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Field, useFormikContext } from "formik";
+import { ClassNames } from "@emotion/react";
 
 interface Props {
     name: string;
     id: string;
     placeholder: string;
+    className: string;
 }
 
 
-export function PhoneMask({ name, id, placeholder }: Props) {
+export function PhoneMask({ name, id, placeholder,className}: Props) {
 
     const { setFieldValue } = useFormikContext();
     const [value, setValue] = useState("");
@@ -28,6 +30,7 @@ export function PhoneMask({ name, id, placeholder }: Props) {
             render={({ field }: any) => (
                 <input
                     {...field}
+                    className={className}
                     id={id}
                     value={value}
                     placeholder={placeholder}

@@ -28,7 +28,7 @@ export function Step1() {
                     <span>Phone Number</span>
                     <ErrorMessage name="phone" component="span" />
                 </div>
-                <PhoneMask id="phone" name="phone" placeholder="e.g. (00) 0000-0000" />
+                <PhoneMask id="phone" name="phone" placeholder="e.g. (00) 0000-0000" className={touched.email && errors.email ? "invalid-input" : ""} />
             </label>
         </div>
     )
