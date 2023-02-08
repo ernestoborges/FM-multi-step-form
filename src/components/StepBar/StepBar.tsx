@@ -23,7 +23,7 @@ export function StepBar({ steps }: Props) {
                     steps.map((step, index) =>
                         <li key={index}>
                             <div
-                                className={`${currentStep === step.n ? "selected-step" : ""}`}
+                                className={`${currentStep === step.n - 1 ? "selected-step" : ""}`}
                             >{step.n}</div>
                             <div>
                                 <p>{`step ${step.n}`}</p>
