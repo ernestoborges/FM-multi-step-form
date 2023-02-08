@@ -1,7 +1,7 @@
 import "./styles.css";
-import { Formik, Form } from "formik";
+import { Formik, Form, useFormikContext, FormikContext } from "formik";
 import { FormikConfig, FormikValues } from "formik/dist/types";
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Step1 } from "../Steps/Step1";
 import { Step2 } from "../Steps/Step2";
 import { Step3 } from "../Steps/Step3";
@@ -47,6 +47,19 @@ const validate = (values: FormikValues) => {
     return errors;
 }
 
+export const initialValues = {
+    name: "",
+    email: "",
+    phone: "",
+    plan: "Arcade",
+    yearly_payment: false,
+    addons: {
+        online_service: false,
+        larger_storage: false,
+        cuztomizeble_profile: false
+    }
+}
+
 export function MultiStepForm() {
 
     let steps = [
@@ -64,24 +77,10 @@ export function MultiStepForm() {
                 <StepBar steps={steps} />
                 <section className="form">
                     <div className="form-content-box">
-                        <h2>{steps.find(item => item.n === currentStep)?.subtitle}</h2>
-                        <h3>{steps.find(item => item.n === currentStep)?.text}</h3>
+                        <h2>{steps.find(item => item.n === currentStep + 1)?.subtitle}</h2>
+                        <h3>{steps.find(item => item.n === currentStep + 1)?.text}</h3>
                         <FormikStepper
-                            initialValues={
-                                {
-                                    name: "",
-                                    email: "",
-                                    phone: "",
-                                    plan: "Arcade",
-                                    yearly_payment: false,
-                                    addons: {
-                                        online_service: false,
-                                        larger_storage: false,
-                                        cuztomizeble_profile: false
-                                    }
-                                }
-                            }
-                            validate={validate}
+                            initialValues={initialValues}
                             onSubmit={() => { }}
                         >
                             <Step1 />
@@ -103,37 +102,54 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
     const setCurrentStep = useContext(StepContext)!.setSelectedStep;
 
     const childrenArray = React.Children.toArray(children as React.ReactNode[]);
-    const currentChild = childrenArray[currentStep ? currentStep - 1 : 0];
+    const currentChild = childrenArray[currentStep];
 
     return (
-        <>
-            <Formik {...props} onSubmit={(values: FormikValues) => {
-                if (currentStep < childrenArray.length - 1) {
+        <Formik {...props}
+            validate={validate}
+            onSubmit={(values, helpers) => {
+                if (currentStep === childrenArray.length - 2) {
                     setCurrentStep(currentStep + 1);
-                } else {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
+                        helpers.resetForm({});
                     }, 500);
+                } else {
+                    setCurrentStep(currentStep + 1);
+                    helpers.setTouched({});
                 }
-            }}>
-                <Form id="formik">{currentChild}</Form>
-            </Formik>
-            <div className={`buttons-container ${currentStep === 5 ? "hidden" : ""}`}>
-                <div>
-                    {
-                        currentStep !== 1 && <button onClick={
-                            () => currentStep > 1
-                                ? setCurrentStep(currentStep - 1)
-                                : null
-                        } className="back-btn">Go Back</button>
-                    }
+            }}
+        >
+            <Form id="formik">
+                {currentChild}
+                <div className={`buttons-container`}>
+                    <div>
+                        {
+                            currentStep > 0 &&
+                            currentStep < childrenArray.length - 1 &&
+                            <button
+                                type="button"
+                                onClick={
+                                    () => currentStep > 0
+                                        ? setCurrentStep(currentStep - 1)
+                                        : null
+                                } className="back-btn">
+                                Go Back
+                            </button>
+                        }
+                    </div>
+                    <div>
+                        {currentStep === childrenArray.length - 1
+                            ? <button type="button" className="reset-btn" onClick={() => window.location.reload()}>
+                                New subscription
+                            </button>
+                            : <button type="submit" form="formik" className="next-btn">
+                                {currentStep === childrenArray.length - 2 ? "Confirm" : "Next Step"}
+                            </button>
+                        }
+                    </div>
                 </div>
-                <div>
-                    <button form="formik" type="submit" className="next-btn">
-                        {currentStep === childrenArray.length - 1 ? "Confirm" : "Next Step"}
-                    </button>
-                </div>
-            </div>
-        </>
+            </Form>
+        </Formik>
     )
 }

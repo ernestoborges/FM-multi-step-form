@@ -51,6 +51,9 @@
 .form form {
     flex-grow: 1;
     margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .form .buttons-container {
@@ -70,7 +73,8 @@
     text-decoration: underline;
 }
 
-.next-btn {
+.next-btn,
+.reset-btn  {
     background-color: var(--marine-blue);
     color: var(--white);
     border-radius: 0.4rem;
@@ -79,5 +83,12 @@
     cursor: pointer;
 }
 .next-btn:hover {
+    opacity: 0.6
+}
+
+.reset-btn {
+    background-color: var(--strawberry-red);
+}
+.reset-btn:hover {
     opacity: 0.6
 }

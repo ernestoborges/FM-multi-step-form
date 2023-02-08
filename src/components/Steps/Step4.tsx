@@ -38,8 +38,8 @@ export function Step4() {
                 <hr />
                 <ul className="options-list">
                     {
-                        options.map((option) => (
-                            <li className={`${values.addons[option.keyName as keyof typeof values.addons] ? "" : "hidden"}`}>
+                        options.map((option, index) => (
+                            <li key={index} className={`${values.addons[option.keyName as keyof typeof values.addons] ? "" : "hidden"}`}>
                                 <p>{option.name}</p>
                                 <p>{`$${values.yearly_payment
                                     ? option.price.year + "/yr"

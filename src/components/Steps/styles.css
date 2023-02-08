@@ -36,6 +36,9 @@
     padding: 1.2rem;
     border-radius: 0.6rem;
     border: 0.1rem solid var(--light-gray);
+    font-weight: 700;
+    color: var(--marine-blue);
+    font-family: 'Ubuntu', sans-serif;
 }
 .personal-info input::placeholder {
     font-weight: 500;

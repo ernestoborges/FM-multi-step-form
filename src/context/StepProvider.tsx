@@ -13,7 +13,7 @@ const StepContext = createContext<StepContextValue | null>(null);
 
 export function StepProvider({ children  }: StepProviderProps) {
 
-    const [selectedStep, setSelectedStep] = useState<number>(1);
+    const [selectedStep, setSelectedStep] = useState<number>(0);
     const value: StepContextValue = { selectedStep, setSelectedStep }
 
     return (

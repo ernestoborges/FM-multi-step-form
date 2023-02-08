@@ -20,8 +20,8 @@ export function StepBar({ steps }: Props) {
         <section className="step-track">
             <ul>
                 {
-                    steps.map((step) =>
-                        <li>
+                    steps.map((step, index) =>
+                        <li key={index}>
                             <div
                                 className={`${currentStep === step.n ? "selected-step" : ""}`}
                             >{step.n}</div>

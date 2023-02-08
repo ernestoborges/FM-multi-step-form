@@ -17,7 +17,7 @@ export function Step3() {
             <ul role="group">
                 {
                     options.map((option, index) => (
-                        <li >
+                        <li key={index}>
                             <label className={`${values.addons[option.keyName as keyof typeof values.addons] ? "option-selected" : ""}`}>
                                 <Field
                                     type="checkbox"

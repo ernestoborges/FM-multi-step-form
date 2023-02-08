@@ -16,17 +16,17 @@ export function Step2() {
         <div className="form-step-content-wrapper plan-selection">
             <div className="plan-list" role="group">
                 {
-                    plans.map((plan) => (
-                        <label className={`${values.plan === plan.name ? "selected-plan" : ""}`} >
-                                <Field type="radio" name="plan" value={plan.name} className="hidden"/>
+                    plans.map((plan, index) => (
+                        <label key={index} className={`${values.plan === plan.name ? "selected-plan" : ""}`} >
                                 <div>
-                                    <img src={`src/assets/images/icon-${plan.name}.svg`} />
+                                    <img src={`/images/icon-${plan.name.toLowerCase()}.svg`} />
                                 </div>
                                 <div>
                                     <p>{plan.name}</p>
                                     <p>{`$${values.yearly_payment ? plan.year : plan.month}/${values.yearly_payment ? "yr" : "mo"}`}</p>
                                     {values.yearly_payment && <p>2 months free</p>}
                                 </div>
+                                <Field type="radio" name="plan" value={plan.name} className="hidden"/>
                         </label>
                     ))
                 }

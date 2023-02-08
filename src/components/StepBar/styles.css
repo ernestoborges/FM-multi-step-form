@@ -2,7 +2,7 @@
     width: 27.4rem;
     height: 56.8rem;
     color: var(--white);
-    background-image: url("src/assets/images/bg-sidebar-desktop.svg");
+    background-image: url("/images/bg-sidebar-desktop.svg");
     border-radius: 1rem;
     padding: 4rem 3rem;
 }
