@@ -344,6 +344,9 @@ input:checked + .slider:before {
         flex-direction: row;
         justify-content: space-around;
     }
+    .submit-page-container {
+        margin: 0;
+    }
 }
 
 @media only screen and (max-width: 610px) {
