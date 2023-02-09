@@ -25,7 +25,7 @@ export function StepBar({ steps }: Props) {
                             <div
                                 className={`${currentStep === step.n - 1 ? "selected-step" : ""}`}
                             >{step.n}</div>
-                            <div>
+                            <div className="step-text">
                                 <p>{`step ${step.n}`}</p>
                                 <p>{step.title}</p>
                             </div>
@@ -33,6 +33,7 @@ export function StepBar({ steps }: Props) {
                     )
                 }
             </ul>
+            <div className="blue-bar"></div>
         </section>
     )
 }
